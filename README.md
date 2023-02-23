@@ -1,1 +1,1 @@
-# http://andrebrum01.github.io/cuphead
+# http://andrebrum01.github.io/CUPHEAD
