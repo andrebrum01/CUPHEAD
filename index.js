@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(collect.onCollider(player.sprite.collider)){
                 collect.destroy("splash");
             }
-            return !collect.isDestroed;
+            return !collect?.isDestroed;
         });
         controls.update();
     })

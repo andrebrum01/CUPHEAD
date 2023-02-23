@@ -25,6 +25,5 @@ class Sprite {
         this.speed = speed;
         this.loop = loop;
         this.image = myImage;
-        
     }
 }
