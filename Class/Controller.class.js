@@ -32,8 +32,11 @@ class Controller {
       if (this.keyState['ArrowLeft'] || this.keyState['KeyA']) {
         this.move('x', -1);
       }
-      if (this.keyState['ArrowRight'] || this.keyState['KeyD']) {
+      else if (this.keyState['ArrowRight'] || this.keyState['KeyD']) {
         this.move('x', 1);
+      }
+      else{
+        this.player.stop();
       }
       if (this.keyState['ArrowUp'] || this.keyState['KeyW']) {
         this.move('y', -1);

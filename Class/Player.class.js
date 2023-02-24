@@ -1,5 +1,5 @@
 class Player {
-    constructor({x, y, width, height, speed, jumpForce, game, sprite}) {
+    constructor({x, y, speed, jumpForce, game, sprite}) {
       // CONSTANTE DE JOGO 
       this.game = game;
 
@@ -8,8 +8,8 @@ class Player {
 
       // PROPRIEDADES DE ESPAÇO
       this.pos = new Vector(x,y);
-      this.width = width;
-      this.height = height;
+      this.width = sprite.width;
+      this.height = sprite.height;
 
       // PROPRIEDADES DE FORÇAS
       this.speed = speed;
@@ -31,7 +31,7 @@ class Player {
   
     update() {
       this.sprite.setPos(this.pos);
-
+      this.atualizarPos(this.sprite);
       this.sprite.animate();
       // Atualiza a posição do player
       this.pos = this.pos.add(this.velocity);
@@ -81,7 +81,7 @@ class Player {
     }
 
     animationStates(){
-      if(this.velocity.y!=0){
+      if(this.velocity.y!=0 || this.isJumping){
         this.sprite.setAnimation('jump');
       }
       else if(this.isMove){
@@ -91,20 +91,33 @@ class Player {
         this.sprite.setAnimation('idle');
       }
     }
+
+    atualizarPos(currentSprite){
+      let flip = currentSprite.flip ? -1 : 1;
+      const tempWidth = currentSprite.width;
+      const tempHeight = currentSprite.height;
+      this.pos.x += (this.width - tempWidth)*flip;
+      this.pos.y += (this.height - tempHeight);
+      this.width = tempWidth;
+      this.height = tempHeight;
+    }
   
     onCollision(other) {
       if (other instanceof BorderCollider) {
         const border = other.border;
         if (border === 'left') {
-          this.velocity.x = Math.max(0, this.velocity.x);
-          this.position.x = this.width / 2;
-        } else if (border === 'right') {
+          this.position.x = 0;
+          this.stop();
+        }
+        if (border === 'right') {
           this.velocity.x = Math.min(0, this.velocity.x);
           this.position.x = this.game.canvas.width - this.width / 2;
-        } else if (border === 'top') {
+        }
+        if (border === 'top') {
           this.velocity.y = 0;
           this.position.y = this.height / 2;
-        } else if (border === 'bottom') {
+        }
+        if (border === 'bottom') {
           this.isGrounded = true;
           this.velocity.y = 0;
           this.position.y = this.game.canvas.height - this.height / 2;

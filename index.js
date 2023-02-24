@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded',()=>{
                 cols: 5,    
                 rows: 4,
                 speed: 1,
+                scale:.6,
                 src:'./Assets/coins/coins_splash.png',
                 loop: false
             }),
         ]
     });
-
-    
+  
     const playerSprite = new SpriteSheets({
         game,
         gap: 0,
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 x: 0,
                 y: 0,
                 cols: 8,
-                speed: .5,
+                speed: .6,
                 scale: .5,
                 src:'./Assets/cuphead_player/cup_jump.png',
             }),
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 x: 0,
                 y: 0,
                 cols: 16,
-                speed: 1,
-                scale: .6,
+                speed: 1.1,
+                scale: .5,
                 rows: 2,
                 src:'./Assets/cuphead_player/cup_run.png',
             }),
@@ -79,10 +79,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     const player = new Player({
         game,
-        x:0,
+        x:(canvas.width-playerSprite.width)/2,
         y:0,
-        width:playerSprite.width,
-        height:playerSprite.height,
         speed:10,
         jumpForce:20,
         sprite: playerSprite

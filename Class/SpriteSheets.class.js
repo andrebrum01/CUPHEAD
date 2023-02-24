@@ -63,19 +63,34 @@ class SpriteSheets {
     );
     this.game.ctx.restore();
     // Drar debug line collider
-    // this.collider.drawPolygonCollider(this.game.ctx);
+    this.collider.drawPolygonCollider(this.game.ctx);
 
   }
   
-
   setAnimation(name) {
     this.spriteList.forEach(sprite=>{
       if(name == sprite.name && this.currentSprite.name != sprite.name){
         this.currentFrame = 0;
         this.currentSprite = sprite;
-        this.lifeTime = Math.round(1000 / (this.currentSprite.speed * this.game.fps));
+        this.atualizarPos(sprite);
       }
     })
+  }
+  
+  atualizarPos(currentSprite){
+    this.lifeTime = Math.round(1000 / (currentSprite.speed * this.game.fps));
+    const tempWidth = currentSprite.w * currentSprite.scale;
+    const tempHeight = currentSprite.h * currentSprite.scale;
+    this.pos.x += (this.width - tempWidth)/2;
+    this.pos.y += (this.height - tempHeight)/2;
+    this.width = tempWidth;
+    this.height = tempHeight;
+    this.collider = new PolygonCollider([
+      new Vertex(this.pos.x,this.pos.y),
+      new Vertex(this.width+this.pos.x,this.pos.y),
+      new Vertex(this.width+this.pos.x,this.height+this.pos.y),
+      new Vertex(this.pos.x,this.height+this.pos.y),
+    ]);
   }
 
   nextAnimationFrame() {
@@ -86,7 +101,6 @@ class SpriteSheets {
       } else {
         this.isPlaying = false;
         this.isFinally = true;
-
       }
     }
   }
